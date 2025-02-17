@@ -1,4 +1,4 @@
-package com.example.habimatch
+package com.android.habimatch
 
 import io.flutter.embedding.android.FlutterActivity
 

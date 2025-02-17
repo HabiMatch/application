@@ -1,4 +1,6 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:habimatch/core/error/errorwidget.dart';
 import 'package:habimatch/core/theme/app_pallete.dart';
 
 class SignupPage extends StatefulWidget {
@@ -13,9 +15,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppPallete.backgroundColor,
-        ),
+        appBar: AppBar(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -30,46 +30,59 @@ class _SignupPageState extends State<SignupPage> {
                   Text(
                     'Sign Up',
                     style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 42,
                         fontWeight: FontWeight.bold,
                         color: AppPallete.textColor),
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    width: screenWidth * 0.85,
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: AppPallete.borderColor, width: 2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/google.png',
-                          width: 24,
-                          height: 24,
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          "Continue with Google",
-                          style: TextStyle(
+                  GestureDetector(
+                    onTap: () {
+                      ErrorSnackbar.show(
+                        context,
+                        title: 'Error',
+                        message: 'Not able to sign in',
+                        color: AppPallete.errorColor,
+                        contentType: ContentType.failure,
+                      );
+                    },
+                    child: Container(
+                      width: screenWidth * 0.85,
+                      padding:
+                          EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: AppPallete.borderColor, width: 2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/google.png',
+                            width: 24,
+                            height: 24,
+                          ),
+                          SizedBox(width: 20),
+                          Text(
+                            "Continue with Google",
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: AppPallete.textColor,
                               letterSpacing: 1,
-                              wordSpacing: 1),
-                        ),
-                        SizedBox(width: 20),
-                      ],
+                              wordSpacing: 1,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
                   Text(
                     'Hassle-free roommate matching, just for you!',
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppPallete.textColor),
                   ),
