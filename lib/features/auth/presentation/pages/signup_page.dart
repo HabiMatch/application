@@ -1,9 +1,11 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habimatch/core/theme/app_pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:habimatch/core/widget/custom_snackbar.dart';
 import 'package:habimatch/features/auth/data/datasources/auth_firebase_data.dart';
+import 'package:habimatch/features/auth/presentation/bloc/auth_bloc.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -41,28 +43,10 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 20),
                 GestureDetector(
-                  onTap: () async {
+                  onTap: () {
                     try {
-                      String cred = await auth.googleSignIn();
-                      print('User UID: $cred');
-
-                      CustomSnackbar.show(
-                        context,
-                        title: 'Logged in',
-                        message: 'User UID: $cred',
-                        color: Colors.green,
-                        contentType: ContentType.success,
-                      );
-                    } catch (e) {
-                      print('Error during sign-in: $e');
-                      CustomSnackbar.show(
-                        context,
-                        title: 'Error',
-                        message: e.toString(),
-                        color: Colors.red,
-                        contentType: ContentType.failure,
-                      );
-                    }
+                      context.read<AuthBloc>().add(AuthSignUp());
+                    } catch (e) {}
                   },
 
                   child: Container(

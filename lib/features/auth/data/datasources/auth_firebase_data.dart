@@ -9,9 +9,7 @@ abstract interface class AuthFirebaseDataSource {
 }
 
 class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'https://www.googleapis.com/auth/contacts.readonly'],
-  );
+  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   FirebaseAuth auth = FirebaseAuth.instance;
   final storage = new FlutterSecureStorage();
 
