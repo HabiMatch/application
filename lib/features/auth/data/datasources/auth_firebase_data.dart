@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:habimatch/core/error/exceptions.dart';
@@ -11,10 +10,7 @@ abstract interface class AuthFirebaseDataSource {
 
 class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
   GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
+    scopes: ['email', 'https://www.googleapis.com/auth/contacts.readonly'],
   );
   FirebaseAuth auth = FirebaseAuth.instance;
   final storage = new FlutterSecureStorage();
@@ -32,8 +28,9 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
           accessToken: googleSignInAuthentication.accessToken,
         );
         try {
-          UserCredential userCredential =
-              await auth.signInWithCredential(credential);
+          UserCredential userCredential = await auth.signInWithCredential(
+            credential,
+          );
           storeTokenAndData(userCredential);
           if (userCredential.user == null) {
             throw const ServerException("User is null");
@@ -64,9 +61,13 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
 
   Future<void> storeTokenAndData(UserCredential userCredential) async {
     await storage.write(
-        key: "token", value: userCredential.credential?.token.toString());
+      key: "token",
+      value: userCredential.credential?.token.toString(),
+    );
     await storage.write(
-        key: "userCredential", value: userCredential.credential.toString());
+      key: "userCredential",
+      value: userCredential.credential.toString(),
+    );
   }
 
   Future<String?> getToken() async {
@@ -74,14 +75,10 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
   }
 
   Future<String?> getCred() async {
-    return await storage.read(
-      key: "userCredential",
-    );
+    return await storage.read(key: "userCredential");
   }
 
   Future<String?> getcreddata() {
-    return storage.read(
-      key: "userCredential",
-    );
+    return storage.read(key: "userCredential");
   }
 }
