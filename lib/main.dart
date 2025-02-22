@@ -7,22 +7,14 @@ import 'package:habimatch/features/auth/data/repositories/auth_repository_impl.d
 import 'package:habimatch/features/auth/domain/repository/user_sign_up.dart';
 import 'package:habimatch/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:habimatch/features/auth/presentation/pages/signup_page.dart';
+import 'package:habimatch/init_dependencies.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await initDependencies();
   runApp(
     MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create:
-              (_) => AuthBloc(
-                userSignUp: UserSignUp(
-                  AuthRepositoryImpl(AuthFirebaseDataSourceImpl()),
-                ),
-              ),
-        ),
-      ],
+      providers: [BlocProvider(create: (_) => serviceLocator<AuthBloc>())],
       child: const MyApp(),
     ),
   );
